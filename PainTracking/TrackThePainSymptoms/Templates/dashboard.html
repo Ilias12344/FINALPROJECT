@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f9;
+        color: #333;
+    }
+    .container {
+        display: flex;
+        width: 100%;
+    }
+    
+    
+    .sidebar {
+        background-color: lightblue;
+        color: white;
+        width: 100px;
+        height: 100vh;
+        padding: 20px;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        top: 0;
+        left: 0;
+    }
+    
+    .sidebar h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+    .sidebar ul {
+        list-style: none;
+        padding: 0;
+    }
+    
+    .sidebar ul li {
+        margin: 70px 0;
+    }
+    
+    .sidebar ul li a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    
+    .sidebar ul li a:hover {
+        text-decoration: underline;
+    }
+    
+    
+    .dashboard {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .header {
+        background-color: lightblue;
+        color: white;
+        width: 100%;
+        text-align: center;
+        padding: 10px 0;
+    }
+    
+    main {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        width: 8%;
+        margin: 20px auto;
+    }
+    
+    .card {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        text-align: center;
+    }
+    
+    .card h2 {
+        margin-top: 0;
+    }
+    
+    .body-map {
+        width: 100%;
+        max-width: 200px;
+        margin: 10px auto;
+    }
+    
+    footer {
+        background-color: lightblue;
+        color: white;
+        text-align: center;
+        padding: 10px;
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+    }
+</style>
+<body>
+    
+    <div class="dashboard">
+        <header class="header">
+            <h1>Care Journey Dashboard</h1>
+        </header>
+        <main>
+            <section class="card" id="pain-rating">
+                <h2>Pain Rating</h2>
+                <p>Today's Pain Level: <span id="pain-level">6</span>/10</p>
+                <input type="range" id="pain-slider" min="0" max="10" value="6">
+            </section>
+            <section class="card" id="pain-location">
+                <h2>Pain Location</h2>
+                <img src="body-map.png" alt="Body Map" class="body-map">
+            </section>
+            <section class="card" id="pain-triggers">
+                <h2>Pain Triggers</h2>
+                <ul id="triggers-list">
+                    <li>Activity</li>
+                    <li>Stress</li>
+                    <li>Weather Changes</li>
+                    <li>Anxiety</li>
+                    <li>Depression</li>
+                    <li>Repetitive motion</li>
+                    <li>Sport injuries</li>
+                    <li>weak muscles</li>
+                </ul>
+            </section>
+            <section class="card" id="pain-trend">
+                <h2>Pain Trend</h2>
+                <canvas id="painChart"></canvas>
+            </section>
+        </main>
+        <footer>
+            <p>© 2024 Care Journey Tracking</p>
+        </footer>
+    </div>
+    <div class="container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <h2>Menu</h2>
+            <ul>
+                <li><a href="#pain-rating">Pain Rating</a></li>
+                <li><a href="#pain-location">Pain Location</a></li>
+                <li><a href="#pain-triggers">Pain Triggers</a></li>
+                <li><a href="#pain-trend">Pain Trend</a></li>
+                <li><a href="#settings">Settings</a></li>
+            </ul>
+        </nav>
+        </div>
+    <script src="dashboard.js"></script>
+    
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HomePage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        header {
+            background:black;
+            color: white;
+            padding: 15px 0;
+            font-size: 24px;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background: lightblue;
+            padding: 10px 0;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 18px;
+        }
+        nav a:hover {
+            background: #1abc9c;
+            border-radius: 5px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .pain-list {
+            list-style: none;
+            padding: 0;
+        }
+        .pain-list li {
+            background: lightblue;
+            color: white;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <header>HomePage</header>
+    <nav>
+        <a href="#about">About Us</a>
+        <a href="#contact">Contact</a>
+        <a href="dashboard.html">dashboard</a>
+        <a href="#settings">Settings</a>
+        <a href="{% url 'logout' %}">Logout</a>
+    </nav>
+    <div class="container">
+        <h2>Types of Pain Symptoms</h2>
+        <ul class="pain-list">
+            <li>Chest Pain</li>
+            <li>Back Pain</li>
+            <li>Headache</li>
+            <li>Joint Pain</li>
+            <li>Abdominal Pain</li>
+        </ul>
+    </div>
+</body>
+</html>
+
