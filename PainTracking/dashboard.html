@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pain Tracking Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+        }
+        .dark-mode {
+            background-color: #121212;
+        }
+        .dark-mode .sidebar {
+            background-color: #1e1e1e;
+        }
+        
+        .dark-mode .main-content {
+            background-color: #222;
+            color: white;
+        }
+        
+        .dark-mode .navbar {
+            background-color: #1e1e1e;
+        }
+        
+        
+        .dark-mode .sidebar ul li:hover {
+            background-color: #333;
+        }
+
+        .dark-mode table {
+            background-color: #333;
+            color: white;
+        }
+        
+        .dark-mode th,
+        .dark-mode td {
+            border: 1px solid #444;
+        }
+        
+        .dark-mode th {
+            background-color: #444;
+        }
+        
+        .dark-mode label {
+            color: white;
+        }
+        
+        .dark-mode a {
+            color: #1abc9c;
+        }
+        
+        .dark-mode a:hover {
+            color: #fff;
+        }
+        
+
+        header {
+            background: black;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+        }
+        
+        .navbar {
+            background:#0077b6;
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+        }
+        .navbar a:hover {
+            background: #1abc9c;
+            border-radius: 5px;
+        }
+        .sidebar {
+            width: 250px;
+            background: black;
+            color: white;
+            height: 100vh;
+            position: fixed;
+            padding-top: 20px;
+            top: 60px;
+            left: 0;
+            margin-top: 30px;
+        }
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            padding: 15px;
+            text-decoration: none;
+            color: white;
+            display: block;
+            cursor: pointer;
+        }
+        .sidebar ul li:hover {
+            background-color: #575757;
+        }
+        .content-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 50px;
+        }
+        .main-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+        }
+        
+        h2 {
+         color: white;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: lightblue;
+        }
+
+        .pain-form {
+            margin-bottom: 20px;
+        }
+
+        input, select, button {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #218838;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            background: #007bff;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .back-btn:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>Dashboard</header>
+    <div class="navbar">
+        <a href="{% url 'HomePage' %}">Home</a>
+    </div>
+    <div class="sidebar">
+        <h2>Dashboard</h2>
+        <ul>
+            <li onclick="loadPainTracking('Chest Pain')">Chest Pain</li>
+            <li onclick="loadPainTracking('Back Pain')">Back Pain</li>
+            <li onclick="loadPainTracking('Headache')">Headache</li>
+            <li onclick="loadPainTracking('Joint Pain')">Joint Pain</li>
+            <li onclick="loadPainTracking('Abdominal Pain')">Abdominal Pain</li>
+        </ul>
+    </div>
+    <div class="content-wrapper">
+        <div class="main-content" id="pain-tracking-content">
+            <h1>Welcome To The Pain Tracking Dashboard</h1>
+        </div>
+    </div>
+    <script>
+        function loadPainTracking(painType) {
+            let formHTML = '';
+            
+            // Load form for each pain type
+            switch (painType) {
+                case 'Chest Pain':
+                    formHTML = `
+                        <h3>Chest Pain</h3>
+                        <form method="post" action="{% url 'dashboard' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="pain_type" value="chest pain">
+
+<label for="severity">Pain Severity (0-10):</label>
+<input type="number" id="severity" name="severity" min="0" max="10" required><br><br>
+
+<label for="duration">Duration (minutes):</label>
+<input type="number" id="duration" name="duration" min="0" required><br><br>
+
+<label for="location">Location of Pain:</label>
+<select id="location" name="location" required>
+    <option value="left-chest">Left Chest</option>
+    <option value="right-chest">Right Chest</option>
+    <option value="center-chest">Center Chest</option>
+    <option value="upper-chest">Upper Chest</option>
+</select><br><br>
+
+<label for="pain-type">Type of Pain:</label>
+<select id="pain-type" name="pain-type" required>
+    <option value="sharp">Sharp</option>
+    <option value="dull">Dull</option>
+    <option value="throbbing">Throbbing</option>
+    <option value="pressure">Pressure</option>
+</select><br><br>
+
+<label for="trigger">Potential Trigger:</label>
+<input type="text" id="trigger" name="trigger" placeholder="e.g., stress, exercise"><br><br>
+
+<button type="submit">Track Chest Pain</button>
+                        <h3>Your Tracked Pain Records</h3>
+                      <table>
+                      <thead>
+                     <tr>
+                     <th>Pain Type</th>
+                    <th>Severity</th>
+                   <th>Duration</th>
+                  <th>Location</th>
+                  <th>Trigger</th>
+                  <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in records %}
+                <tr>
+                    <td>{{ record.pain_type }}</td>
+                    <td>{{ record.severity }}</td>
+                    <td>{{ record.duration }}</td>
+                    <td>{{ record.location }}</td>
+                    <td>{{ record.trigger }}</td>
+                    <td>{{ record.date_created }}</td>
+                      <td>
+               <a href="{% url 'delete_pain' record.id %}" class="back-btn" onclick="return confirm('Are you sure you want to delete this record?');">Delete</a>
+            </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+                    `;
+                    break;
+                
+                case 'Back Pain':
+                    formHTML = `
+                        <h3>Back Pain</h3>
+                        <form method="post" action="{% url 'dashboard' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="pain_type" value="back pain">
+                            Severity: <input type="number" name="severity" required>
+                            Duration: <input type="text" name="duration" required>
+                            Location: <input type="text" name="location" required>
+                            Trigger: <input type="text" name="trigger" required>
+                            <button type="submit">Track Back Pain</button>
+                        </form>
+                        <h3>Your Tracked Pain Records</h3>
+                      <table>
+                      <thead>
+                     <tr>
+                     <th>Pain Type</th>
+                    <th>Severity</th>
+                   <th>Duration</th>
+                  <th>Location</th>
+                  <th>Trigger</th>
+                  <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in records %}
+                <tr>
+                    <td>{{ record.pain_type }}</td>
+                    <td>{{ record.severity }}</td>
+                    <td>{{ record.duration }}</td>
+                    <td>{{ record.location }}</td>
+                    <td>{{ record.trigger }}</td>
+                    <td>{{ record.date_created }}</td>
+                     <td>
+                <a href="{% url 'delete_pain' record.id %}" class="back-btn" onclick="return confirm('Are you sure you want to delete this record?');">Delete</a>
+            </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+                        
+                    `;
+                    break;
+    
+                case 'Headache':
+                    formHTML = `
+                        <h3>Headache</h3>
+                        <form method="post" action="{% url 'dashboard' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="pain_type" value="headache">
+                            Severity: <input type="number" name="severity" required>
+                            Duration: <input type="text" name="duration" required>
+                            Location: <input type="text" name="location" required>
+                            Trigger: <input type="text" name="trigger" required>
+                            <button type="submit">Track Headache</button>
+                        </form>
+                        <h3>Your Tracked Pain Records</h3>
+                      <table>
+                      <thead>
+                     <tr>
+                     <th>Pain Type</th>
+                    <th>Severity</th>
+                   <th>Duration</th>
+                  <th>Location</th>
+                  <th>Trigger</th>
+                  <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in records %}
+                <tr>
+                    <td>{{ record.pain_type }}</td>
+                    <td>{{ record.severity }}</td>
+                    <td>{{ record.duration }}</td>
+                    <td>{{ record.location }}</td>
+                    <td>{{ record.trigger }}</td>
+                    <td>{{ record.date_created }}</td>
+                     <td>
+               <a href="{% url 'delete_pain' record.id %}" class="back-btn" onclick="return confirm('Are you sure you want to delete this record?');">Delete</a>
+            </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+                       
+                    `;
+                    break;
+                
+                case 'Joint Pain':
+                    formHTML = `
+                        <h3>Joint Pain</h3>
+                        <form method="post" action="{% url 'dashboard' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="pain_type" value="joint pain">
+                            Severity: <input type="number" name="severity" required>
+                            Duration: <input type="text" name="duration" required>
+                            Location: <input type="text" name="location" required>
+                            Trigger: <input type="text" name="trigger" required>
+                            <button type="submit">Track Joint Pain</button>
+                        </form>
+                        <h3>Your Tracked Pain Records</h3>
+                      <table>
+                      <thead>
+                     <tr>
+                     <th>Pain Type</th>
+                    <th>Severity</th>
+                   <th>Duration</th>
+                  <th>Location</th>
+                  <th>Trigger</th>
+                  <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in records %}
+                <tr>
+                    <td>{{ record.pain_type }}</td>
+                    <td>{{ record.severity }}</td>
+                    <td>{{ record.duration }}</td>
+                    <td>{{ record.location }}</td>
+                    <td>{{ record.trigger }}</td>
+                    <td>{{ record.date_created }}</td>
+                     <td>
+                <a href="{% url 'delete_pain' record.id %}" class="back-btn" onclick="return confirm('Are you sure you want to delete this record?');">Delete</a>
+            </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+                        
+                    `;
+                    break;
+    
+                case 'Abdominal Pain':
+                    formHTML = `
+                        <h3>Abdominal Pain</h3>
+                        <form method="post" action="{% url 'dashboard' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="pain_type" value="abdominal pain">
+                            Severity: <input type="number" name="severity" required>
+                            Duration: <input type="text" name="duration" required>
+                            Location: <input type="text" name="location" required>
+                            Trigger: <input type="text" name="trigger" required>
+                            <button type="submit">Track Abdominal Pain</button>
+                        </form>
+                        <h3>Your Tracked Pain Records</h3>
+                      <table>
+                      <thead>
+                     <tr>
+                     <th>Pain Type</th>
+                    <th>Severity</th>
+                   <th>Duration</th>
+                  <th>Location</th>
+                  <th>Trigger</th>
+                  <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in records %}
+                <tr>
+                    <td>{{ record.pain_type }}</td>
+                    <td>{{ record.severity }}</td>
+                    <td>{{ record.duration }}</td>
+                    <td>{{ record.location }}</td>
+                    <td>{{ record.trigger }}</td>
+                    <td>{{ record.date_created }}</td>
+                     <td>
+                <a href="{% url 'delete_pain' record.id %}" class="back-btn" onclick="return confirm('Are you sure you want to delete this record?');">Delete</a>
+            </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+                      
+                    `;
+                    break;
+    
+                default:
+                    formHTML = `<p>Please select a valid pain type.</p>`;
+            }
+    
+            document.getElementById('pain-tracking-content').innerHTML = formHTML;
+        }
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const darkModeToggle = document.getElementById("darkModeToggle");
+            const body = document.body;
+    
+            if (localStorage.getItem("darkMode") === "enabled") {
+                body.classList.add("dark-mode");
+                if (darkModeToggle) darkModeToggle.checked = true;
+            }
+    
+            if (darkModeToggle) {
+                darkModeToggle.addEventListener("change", function () {
+                    if (this.checked) {
+                        body.classList.add("dark-mode");
+                        localStorage.setItem("darkMode", "enabled");
+                    } else {
+                        body.classList.remove("dark-mode");
+                        localStorage.setItem("darkMode", "disabled");
+                    }
+                });
+            }
+        });
+    </script>
+    
+    
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f4f4f9;
+    }
+    .form-container {
+      width: 300px;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      text-align: center;
+    }
+    .input-group {
+      margin-bottom: 15px;
+    }
+    .input-group label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    .input-group input {
+      width: 92%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      background-color: #0077b6;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .switch {
+      text-align: center;
+      margin-top: 10px;
+    }
+    .switch a {
+      color: #007bff;
+      text-decoration: none;
+    }
+    .gdpr {
+      font-size: 12px;
+      margin-top: 15px;
+      margin-bottom: 10px;
+    }
+    .gdpr input {
+      margin-right: 8px;
+    }
+
+    /* MODAL STYLES */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: white;
+      padding: 20px;
+      width: 50%;
+      max-width: 500px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .modal-buttons {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .modal-buttons button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .confirm-btn {
+      background-color: green;
+      color: white;
+    }
+    .cancel-btn {
+      background-color: red;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Sign Up</h2>
+    <form id="signup-form">
+      {% csrf_token %}
+      <div class="input-group">
+        <label for="signup-username">Username</label>
+        <input type="text" id="signup-username" name="username" placeholder="Enter your username" required>
+      </div>
+      <div class="input-group">
+        <label for="signup-email">Email</label>
+        <input type="email" id="signup-email" name="email" placeholder="Enter your email" required>
+      </div>
+      <div class="input-group">
+        <label for="signup-password">Password</label>
+        <input type="password" id="signup-password" name="password" placeholder="Enter your password" required>
+      </div>
+      <div class="input-group">
+        <label for="signup-confirm-password">Confirm Password</label>
+        <input type="password" id="signup-confirm-password" name="confirm_password" placeholder="Re-enter your password" required>
+      </div>
+
+      <div class="gdpr">
+        <label>
+          <input type="checkbox" id="gdpr-consent" required>
+          I agree to the <a href="#" id="privacy-policy-link">Privacy Policy</a>.
+        </label>
+      </div>
+
+      <button type="submit">Sign Up</button>
+    </form>
+    <div class="switch">
+      <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+    </div>
+  </div>
+
+  <!-- PRIVACY POLICY MODAL -->
+  <div id="privacy-policy-modal" class="modal">
+    <div class="modal-content">
+      <h2>Privacy Policy</h2>
+      <p>Welcome to Pain Tracking Web Application. This Privacy Policy is to collect, use, and safeguard your data.</p>
+      
+      <h3>1. Information Collected</h3>
+      <p>The information that is collected will be such as your username and email when you sign up.</p>
+
+      <h3>2. Your Rights</h3>
+      <p>You can access, update, or request deletion of your data.</p>
+
+      <h3>3. Contact Us</h3>
+      <p>Email: 210168442@aston.ac.uk</p>
+
+      <div class="modal-buttons">
+        <button class="confirm-btn" id="confirm-policy">Confirm</button>
+        <button class="cancel-btn" id="cancel-policy">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const privacyPolicyLink = document.getElementById("privacy-policy-link");
+    const modal = document.getElementById("privacy-policy-modal");
+    const confirmBtn = document.getElementById("confirm-policy");
+    const cancelBtn = document.getElementById("cancel-policy");
+    const gdprCheckbox = document.getElementById("gdpr-consent");
+
+    // Open modal when clicking "Privacy Policy"
+    privacyPolicyLink.addEventListener("click", function(event) {
+      event.preventDefault();
+      modal.style.display = "flex";
+    });
+
+    // Confirm Privacy Policy
+    confirmBtn.addEventListener("click", function() {
+      gdprCheckbox.checked = true;
+      modal.style.display = "none";
+    });
+
+    // Cancel Privacy Policy
+    cancelBtn.addEventListener("click", function() {
+      modal.style.display = "none";
+    });
+
+    // Close modal if clicking outside content
+    window.addEventListener("click", function(event) {
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    });
+
+    // Form Submission
+    document.getElementById("signup-form").addEventListener("submit", async function(event) {
+      event.preventDefault();
+
+      const username = document.getElementById("signup-username").value;
+      const email = document.getElementById("signup-email").value;
+      const password = document.getElementById("signup-password").value;
+      const confirmPassword = document.getElementById("signup-confirm-password").value;
+
+      if (!gdprCheckbox.checked) {
+        alert("You must agree to the Privacy Policy to continue.");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        return;
+      }
+
+      const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+      const response = await fetch("/signup/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": csrftoken  
+        },
+        body: JSON.stringify({ username, email, password })
+      });
+
+      const data = await response.json();
+      alert(data.message);
+
+      if (response.ok) {
+        window.location.href = "/login/";
+      }
+    });
+  </script>
+</body>
+</html>

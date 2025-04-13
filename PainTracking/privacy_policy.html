@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacy Policy</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+    h1 {
+      color: #0077b6;
+    }
+    section {
+      margin-bottom: 20px;
+    }
+    a {
+      color: #0077b6;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <h1>Privacy Policy</h1>
+
+  <section>
+    <p>We are committed to protecting your privacy. This policy explains how we use and safeguard the data you provide to us when using our pain tracking application.</p>
+  </section>
+
+  <section>
+    <h2>1. What Data is Collected</h2>
+    <ul>
+      <li>Basic information such as your username and email (during registration/login)</li>
+      <li>Pain symptoms and health-related inputs you enter into the app</li>
+      <li>Use data to help improve your experience (e.g., preferences)</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>2. Why We Collect It</h2>
+    <ul>
+      <li>To personalise your experience and save your preferences</li>
+      <li>To help you track and analyse your pain history over time</li>
+      <li>To improve the app’s features and usability</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>3. How We Keep Your Data Safe</h2>
+    <p>The secure technologies and follow best practices to protect your data from unauthorised access or misuse.</p>
+  </section>
+
+  <section>
+    <h2>4. Your Rights</h2>
+    <p>You can request to view, update, or delete your data at any time by contacting via the <a href="{% url 'contact' %}">Contact</a> page.</p>
+  </section>
+
+  <section>
+    <h2>5. Cookies</h2>
+    <p>The cookies is to remember your login, settings, and preferences. You can choose to accept or reject cookies when you log in.</p>
+  </section>
+
+  <section>
+    <h2>6. Contact</h2>
+    <p>If you have any questions about this Privacy Policy, please reach out via our <a href="{% url 'contact' %}">Contact</a> page.</p>
+  </section>
+
+  <p><a href="{% url 'HomePage' %}">← Back to HomePage</a></p>
+</body>
+</html>

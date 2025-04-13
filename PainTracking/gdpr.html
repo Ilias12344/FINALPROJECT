@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GDPR Consent</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f4f4f9;
+    }
+    .gdpr-container {
+      width: 80%;
+      max-width: 600px;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    h2 {
+      margin-bottom: 20px;
+    }
+    p {
+      margin-bottom: 30px;
+    }
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .accept-btn {
+      background-color: #0077b6;
+      color: white;
+    }
+    .reject-btn {
+      background-color: #e53e3e;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="gdpr-container">
+    <h2>GDPR Consent</h2>
+    <p>We use cookies and collect personal data to provide a better user experience. Please review our privacy policy and consent to continue.</p>
+    <div class="buttons">
+      <button class="accept-btn" id="accept">Accept</button>
+      <button class="reject-btn" id="reject">Reject</button>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('accept').addEventListener('click', function() {
+      localStorage.setItem('gdpr_accepted', 'true');
+      window.location.href = '/HomePage/';  
+    });
+
+    document.getElementById('reject').addEventListener('click', function() {
+      window.location.href = '/logout/';  
+    });
+  </script>
+</body>
+</html>

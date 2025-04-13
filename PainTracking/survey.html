@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        body.dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+        
+        .dark-mode header, 
+        .dark-mode nav, 
+        .dark-mode .sidebar {
+            background-color: #1e1e1e;
+        }
+        
+        .dark-mode a {
+            color: #ffffff;
+        }
+        
+        .dark-mode .form-container {
+            background: #222;
+            color: white;
+        }
+        
+        .dark-mode input, 
+        .dark-mode select, 
+        .dark-mode button {
+            background: #333;
+            color: white;
+            border: 1px solid #555;
+        }
+        
+        header {
+            background: black;
+            color: white;
+            padding: 15px 0;
+            font-size: 24px;
+            text-align: center;
+            width: 100%; 
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background: lightblue;
+            padding: 10px 0;
+            width: 100%; 
+            margin-bottom: 30px; 
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 18px;
+        }
+        nav a:hover {
+            background: #1abc9c;
+            border-radius: 5px;
+        }
+        .main-container {
+            display: flex;
+            padding: 20px;
+            left: 0%;
+        }
+        .sidebar {
+            width: 250px;
+            background: black;
+            color: white;
+            height: 100vh;
+            position: fixed;
+            padding-top: 20px;
+            top: 84px;
+            left: 0;
+            margin-top: 30px;
+        }
+
+        .sidebar a {
+            padding: 15px;
+            text-decoration: none;
+            color: white;
+            display: block;
+        }
+
+        .sidebar a:hover {
+            background-color: #575757;
+        }
+        
+        .form-container-wrapper {
+            display: flex;
+            justify-content: center; 
+            align-items: center;     
+            padding-top: 6px;       
+        }
+        .form-container {
+            width: 400px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-top: -25px;
+        }
+        p {
+            font-size: 14px;
+            text-align: justify;
+            margin-bottom: 15px;
+        }
+        .survey-form label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .survey-form input, .survey-form textarea, .survey-form select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .survey-form button {
+            margin-top: 15px;
+            background: #1abc9c;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .survey-form button:hover {
+            background: #16a085;
+        }
+
+        /* MODAL STYLES */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: white;
+            padding: 20px;
+            width: 50%;
+            max-width: 500px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .modal-buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .modal-buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .confirm-btn {
+            background-color: green;
+            color: white;
+        }
+     
+    </style>
+</head>
+<body>
+    <header>Survey</header>
+    <nav>
+        <a href="{% url 'HomePage' %}">Home</a>
+    </nav>
+
+    <div class="main-container">
+        <div class="sidebar">
+            <h1>Survey</h1>
+            <a href="javascript:void(0);" onclick="showForm('survey')">See Our Survey</a>
+        </div>
+    </div>
+
+  
+
+    <div class="form-container-wrapper">
+        <div class="form-container" id="survey">
+            <h2>Survey</h2>
+            <p>We value your feedback! Please take a moment to share your thoughts on our project.</p>
+            <form class="survey-form" method="POST" action="{% url 'survey' %}">
+                {% csrf_token %}
+                <label for="name">Who you are & what pain symptoms you suffer from:</label>
+                <textarea id="name" name="name" rows="4" placeholder="Describe your name and the pain symptoms you are experiencing."></textarea>
+
+                
+                <label for="rating">How would you rate your experience?</label>
+                <select id="rating" name="rating" required>
+                    <option value="5">Excellent</option>
+                    <option value="4">Good</option>
+                    <option value="3">Average</option>
+                    <option value="2">Poor</option>
+                    <option value="1">Very Poor</option>
+                </select>
+
+                <label for="feedback">Your Feedback:</label>
+                <textarea id="feedback" name="feedback" rows="4" placeholder="Write your feedback here..." required></textarea>
+
+                <button type="submit">Submit Feedback</button>
+            </form>
+        </div>
+    </div>
+
+
+    <div id="success-modal" class="modal">
+        <div class="modal-content">
+            <h2>Congratulations!!!</h2>
+            <p>Your feedback has been submitted successfully!</p>
+            <div class="modal-buttons">
+                <button class="confirm-btn" id="close-modal">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showForm(formId) {
+            const forms = document.querySelectorAll('.form-container');
+            forms.forEach(form => form.style.display = 'none');
+            const formToShow = document.getElementById(formId);
+            formToShow.style.display = 'block';
+        }
+
+        showForm('survey');
+    </script>
+    <script>
+        
+        const modal = document.getElementById("success-modal");
+        const closeModalButton = document.getElementById("close-modal");
+        const surveyForm = document.querySelector(".survey-form");
+
+        
+        surveyForm.addEventListener("submit", function(event) {
+            event.preventDefault();  
+
+           
+            modal.style.display = "flex";
+
+           
+            closeModalButton.addEventListener("click", function() {
+                modal.style.display = "none";
+            });
+        });
+
+        
+        window.addEventListener("click", function(event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const darkModeToggle = document.getElementById("darkModeToggle");
+            const body = document.body;
+    
+            if (localStorage.getItem("darkMode") === "enabled") {
+                body.classList.add("dark-mode");
+                if (darkModeToggle) darkModeToggle.checked = true;
+            }
+    
+            if (darkModeToggle) {
+                darkModeToggle.addEventListener("change", function () {
+                    if (this.checked) {
+                        body.classList.add("dark-mode");
+                        localStorage.setItem("darkMode", "enabled");
+                    } else {
+                        body.classList.remove("dark-mode");
+                        localStorage.setItem("darkMode", "disabled");
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

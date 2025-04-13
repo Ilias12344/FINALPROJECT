@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+      display: flex;
+      flex-direction: column;
+    }
+
+    body.dark-mode {
+      background-color: #121212;
+      color: #ffffff;
+    }
+
+    .dark-mode header,
+    .dark-mode nav,
+    .dark-mode .sidebar {
+      background-color: #1e1e1e;
+    }
+
+    .dark-mode a {
+      color: #ffffff;
+    }
+
+    .dark-mode .form-container {
+      background: #222;
+      color: white;
+    }
+
+    .dark-mode input,
+    .dark-mode select,
+    .dark-mode button {
+      background: #333;
+      color: white;
+      border: 1px solid #555;
+    }
+
+    header {
+      background: black;
+      color: white;
+      padding: 15px 0;
+      font-size: 24px;
+      text-align: center;
+      width: 100%;
+    }
+
+    nav {
+      background: #0077b6;
+      display: flex;
+      justify-content: center;
+      padding: 10px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+    }
+
+    nav a:hover {
+      background: #1abc9c;
+      border-radius: 5px;
+    }
+
+    .main-container {
+      display: flex;
+    }
+
+    .sidebar {
+      width: 250px;
+      background: black;
+      color: white;
+      height: 100vh;
+      position: fixed;
+      top: 80px;
+      left: 0;
+      padding-top: 20px;
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 15px;
+      text-decoration: none;
+      color: white;
+    }
+
+    .sidebar a:hover {
+      background-color: #1abc9c;
+    }
+
+    .content {
+      margin-left: 270px;
+      padding: 20px;
+      width: calc(100% - 270px);
+    }
+
+    .form-container-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .form-container {
+      width: 100%;
+      max-width: 600px;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <header>About Us</header>
+  <nav>
+    <a href="{% url 'HomePage' %}">Home</a>
+  </nav>
+
+  <div class="main-container">
+    <div class="sidebar">
+      <h2 style="text-align:center;">Sections</h2>
+      <a href="javascript:void(0);" onclick="showForm('purpose')">The purpose</a>
+      <a href="javascript:void(0);" onclick="showForm('the_mission')">The Mission</a>
+      <a href="javascript:void(0);" onclick="showForm('contact_information')">Contact Information</a>
+    </div>
+
+    <div class="content">
+      <div class="form-container-wrapper">
+        <div class="form-container" id="purpose">
+          <h2> The purpose</h2>
+          <p>This application was developed to support people experiencing various types of pain they are affected from and the benefical side of it as a tool. The purpose is to help patients better understand and track their pain symptoms over time such as chest pain, back pain, joint pain, headaches, and abdominal pain. The application allows patients to record, monitor, and reflect on their pain journeys in a meaningful way.</p>
+        </div>
+      </div>
+
+      <div class="form-container-wrapper">
+        <div class="form-container" id="the_mission">
+          <h2>The Mission</h2>
+          <p>The mission of this application is to give patients insights over their health by offering a clear and simple platform to log, track, and analyse pain symptoms. Whether someone is managing chronic pain, the goal is to help them gain useful, identify patterns, and improve the progress with their health and inform doctors on how well it is going with their pain based on the advice they took from the doctors.</p>
+
+        </div>
+      </div>
+
+      <div class="form-container-wrapper">
+        <div class="form-container" id="contact_information">
+          <h2>Contact Information</h2>
+          <p>Want to reach out? <a href="{% url 'contact' %}">Contact page</a></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function showForm(formId) {
+      const forms = document.querySelectorAll('.form-container');
+      forms.forEach(form => form.style.display = 'none');
+      const formToShow = document.getElementById(formId);
+      if (formToShow) formToShow.style.display = 'block';
+    }
+
+    function initializeDarkMode() {
+      const darkModeToggle = document.getElementById("darkModeToggle");
+      const body = document.body;
+
+      if (localStorage.getItem("darkMode") === "enabled") {
+        body.classList.add("dark-mode");
+        if (darkModeToggle) darkModeToggle.checked = true;
+      }
+
+      if (darkModeToggle) {
+        darkModeToggle.addEventListener("change", function () {
+          if (this.checked) {
+            body.classList.add("dark-mode");
+            localStorage.setItem("darkMode", "enabled");
+          } else {
+            body.classList.remove("dark-mode");
+            localStorage.setItem("darkMode", "disabled");
+          }
+        });
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      initializeDarkMode();
+      showForm('purpose');
+    });
+  </script>
+</body>
+</html>

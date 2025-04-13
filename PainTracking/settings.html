@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            display: flex;
+            flex-direction: column;
+        }
+        body.dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+        
+        .dark-mode header, 
+        .dark-mode nav, 
+        .dark-mode .sidebar {
+            background-color: #1e1e1e;
+        }
+        
+        .dark-mode a {
+            color: #ffffff;
+        }
+        
+        .dark-mode .form-container {
+            background: #222;
+            color: white;
+        }
+        
+        .dark-mode input, 
+        .dark-mode select, 
+        .dark-mode button {
+            background: #333;
+            color: white;
+            border: 1px solid #555;
+        }
+        
+        header {
+            background: black;
+            color: white;
+            padding: 15px 0;
+            font-size: 24px;
+            text-align: center;
+            width: 100%;
+        }
+
+        nav {
+            background: #0077b6;
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+        }
+        nav a:hover {
+            background: #1abc9c;
+            border-radius: 5px;
+        }
+        .main-container {
+            display: flex;
+            padding: 20px;
+            left: 0%;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: black;
+            color: white;
+            height: 100vh;
+            position: fixed;
+            padding-top: 20px;
+            top: 60px;
+            left: 0;
+            margin-top: 30px;
+        }
+
+        .sidebar a {
+            padding: 15px;
+            text-decoration: none;
+            color: white;
+            display: block;
+        }
+
+        .sidebar a:hover {
+            background-color: #575757;
+        }
+
+        .content {
+            margin-left: 270px; 
+            padding: 20px;
+            width: 100%;
+        }
+
+        .form-container-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+        }
+
+        .form-container {
+            width: 500px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: none;
+            position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .input-group input {
+            width: 92%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #0077b6;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>Settings</header>
+
+    <nav>
+        <a href="{% url 'HomePage' %}">Home</a>
+    </nav>
+
+    <div class="main-container">
+        <div class="sidebar">
+            <h1>Setting</h1>
+            <a href="javascript:void(0);" onclick="showForm('profile')">Profile</a>
+            <a href="javascript:void(0);" onclick="showForm('password')">Password</a>
+            <a href="javascript:void(0);" onclick="showForm('phone')">Phone</a>
+            <a href="javascript:void(0);" onclick="showForm('tracking_preferences')">Pain Tracking Preferences</a>
+            <a href="javascript:void(0);" onclick="showForm('accessibility')">Accessibility</a>
+            <a href="javascript:void(0);" onclick="showForm('medication')">Medication Reminders</a>
+        </div>
+
+        <div class="content">
+            <div class="form-container-wrapper">
+                <div class="form-container" id="profile">
+                    <h2>Profile</h2>
+                    <form action="{% url 'settings' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" name="username" value="{{ user.username }}" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" value="{{ user.email }}" required>
+                        </div>
+                        <button type="submit">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="form-container-wrapper">
+                <div class="form-container" id="password">
+                    <h2>Change Password</h2>
+                    <form action="{% url 'settings' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <label for="new_password">New Password</label>
+                            <input type="password" id="new_password" name="new_password" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="confirm_password">Confirm Password</label>
+                            <input type="password" id="confirm_password" name="confirm_password" required>
+                        </div>
+                        <button type="submit">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="form-container-wrapper">
+                <div class="form-container" id="phone">
+                    <h2>Change Phone Number</h2>
+                    <form action="{% url 'settings' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="text" id="phone" name="phone" value="{{ user.phone }}" required>
+                        </div>
+                        <button type="submit">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="form-container" id="tracking_preferences">
+                <h2>Pain Tracking Preferences</h2>
+                <form action="{% url 'settings' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <label for="tracking_frequency">Pain Logging Frequency</label>
+                        <select id="tracking_frequency" name="tracking_frequency">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>
+                            <input type="checkbox" name="enable_reminders"> Enable Pain Tracking Reminders
+                        </label>
+                    </div>
+                    <div class="input-group">
+                        <label for="reminder_time">Preferred Reminder Time</label>
+                        <select id="reminder_time" name="reminder_time">
+                            <option value="morning">Morning</option>
+                            <option value="evening">Evening</option>
+                            <option value="both">Both</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="date">Add time</label>
+                        <input type="time" id="date" name="date">
+                    </div>
+                    <button type="submit">Save Changes</button>
+                </form>
+            </div>
+            
+            <div class="form-container-wrapper">
+                <div class="form-container" id="accessibility">
+                    <h2>Accessibility Settings</h2>
+                    <form>
+                        <div class="input-group">
+                            <label>
+                                <input type="checkbox" id="darkModeToggle"> Enable Dark Mode
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    const darkModeToggle = document.getElementById("darkModeToggle");
+                    const body = document.body;
+            
+                    if (localStorage.getItem("darkMode") === "enabled") {
+                        body.classList.add("dark-mode");
+                        if (darkModeToggle) darkModeToggle.checked = true;
+                    }
+            
+                    if (darkModeToggle) {
+                        darkModeToggle.addEventListener("change", function () {
+                            if (this.checked) {
+                                body.classList.add("dark-mode");
+                                localStorage.setItem("darkMode", "enabled");
+                            } else {
+                                body.classList.remove("dark-mode");
+                                localStorage.setItem("darkMode", "disabled");
+                            }
+                        });
+                    }
+                });
+            </script>
+            
+            <div class="form-container-wrapper">
+                <div class="form-container" id="medication">
+                    <h2>Medication Reminders</h2>
+                    <form action="{% url 'settings' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <label for="medication_name">Medication Name</label>
+                            <input type="text" id="medication_name" name="medication_name">
+                        </div>
+                        <div class="input-group">
+                            <label for="medication_time">Reminder Time</label>
+                            <input type="time" id="medication_time" name="medication_time">
+                        </div>
+                        <button type="submit">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showForm(formId) {
+            const forms = document.querySelectorAll('.form-container');
+            forms.forEach(form => form.style.display = 'none');
+            const formToShow = document.getElementById(formId);
+            formToShow.style.display = 'block';
+        }
+        showForm('profile');
+    </script>
+</body>
+</html>
