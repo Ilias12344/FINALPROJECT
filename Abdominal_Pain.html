@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abdominal Pain Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background-color: #f39c12;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background:  #f39c12;
+            padding: 10px 0;
+          }
+      
+          nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 18px;
+            transition: background 0.3s;
+          }
+      
+          nav a:hover {
+            background: #0096c7;
+            border-radius: 5px;
+          }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+        }
+        h2 {
+            color: #f39c12;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+        .section {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+        .video-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .info {
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+        .card {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card h3 {
+            color: #f39c12;
+            margin-bottom: 15px;
+        }
+        .card p {
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+        .dashboard-link, .History-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .dashboard-link a, .History-link a {
+            color: #fff;
+            background-color: #f39c12;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .dashboard-link a:hover, .History-link a:hover {
+            background-color: #d68910;
+        }
+        .link-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .link-container a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .switch {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .switch a {
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Abdominal Pain Tracker</h1>
+    <p>Log and understand your abdominal pain symptoms better.</p>
+</header>
+
+<nav>
+    <a href="{% url 'Chest_Pain' %}">Chest</a>
+    <a href="{% url 'Back_Pain' %}">Back</a>
+    <a href="{% url 'Headache_Pain' %}">Headache</a>
+    <a href="{% url 'Joint_Pain' %}">Joint</a>
+    <a href="{% url 'Abdominal_Pain' %}">Abdominal</a>
+  </nav>
+
+<div class="container">
+
+
+    <div class="card">
+        <h3>Track Your Progress</h3>
+        <p>Use the <strong>Dashboard</strong> to log your symptoms and identify patterns in abdominal pain over time.</p>
+        <div class="dashboard-link">
+            <a href="{% url 'dashboard' %}">Go to Dashboard</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Access Your History</h3>
+        <p>View your abdominal pain records anytime in the <strong>History</strong> section.</p>
+        <div class="History-link">
+            <a href="{% url 'History' %}">History Section</a>
+        </div>
+    </div>
+
+    <div class="link-container">
+        <p>Get help and lifestyle tips in the <a href="{% url 'Guidance' %}">Guidance Section</a>.</p>
+    </div>
+
+    <div class="switch">
+        <a href="{% url 'HomePage' %}">Back to Homepage</a>
+    </div>
+
+</div>
+
+</body>
+</html>

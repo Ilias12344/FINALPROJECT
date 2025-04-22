@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            display: flex;
+            flex-direction: column;
+        }
+        body.dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+        
+        .dark-mode header, 
+        .dark-mode nav, 
+        .dark-mode .sidebar {
+            background-color: #1e1e1e;
+        }
+        
+        .dark-mode a {
+            color: #ffffff;
+        }
+        
+        .dark-mode .form-container {
+            background: #222;
+            color: white;
+        }
+        
+        .dark-mode input, 
+        .dark-mode select, 
+        .dark-mode button {
+            background: #333;
+            color: white;
+            border: 1px solid #555;
+        }
+        
+        header {
+            background: black;
+            color: white;
+            padding: 15px 0;
+            font-size: 24px;
+            text-align: center;
+            width: 100%;
+        }
+
+        nav {
+            background: #0077b6;
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+        }
+        nav a:hover {
+            background: #1abc9c;
+            border-radius: 5px;
+        }
+        .main-container {
+            display: flex;
+            padding: 20px;
+            left: 0%;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: black;
+            color: white;
+            height: 100vh;
+            position: fixed;
+            padding-top: 20px;
+            top: 60px;
+            left: 0;
+            margin-top: 30px;
+        }
+
+        .sidebar a {
+            padding: 15px;
+            text-decoration: none;
+            color: white;
+            display: block;
+        }
+
+        .sidebar a:hover {
+            background-color: #575757;
+        }
+
+        .content {
+            margin-left: 270px; 
+            padding: 20px;
+            width: 100%;
+        }
+
+        .form-container-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .form-container {
+            width: 500px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .input-group input {
+            width: 92%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .faq-item {
+            margin-bottom: 15px;
+        }
+        
+        .faq-question {
+            background-color:#0077b6;
+            border: none;
+            width: 100%;
+            padding: 10px;
+            text-align: left;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        .faq-answer {
+            display: none;
+            padding: 10px;
+            background-color: #fafafa;
+            border-left: 4px solid #4caf50;
+            margin-top: 5px;
+            border-radius: 5px;
+        }
+        
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color:  #0077b6;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>Contact</header>
+    <nav>
+        <a href="{% url 'HomePage' %}">Home</a>
+    </nav>
+
+    <div class="main-container">
+        <div class="sidebar">
+            <h1>Contact</h1>
+            <a href="javascript:void(0);" onclick="showForm('customer_support')">Customer Support</a>
+            <a href="javascript:void(0);" onclick="showForm('faq_preview')">FAQ Preview</a>
+        </div>
+
+        
+        <div class="content">
+            <div class="form-container-wrapper">
+                <div class="form-container" id="customer_support">
+                    <h2>Customer support</h2>
+                    <form action="{% url 'contact' %}" method="POST">
+                        {% csrf_token %}
+                        <p>Get help if you do not understand the process by filling out the form below.</p>
+            
+                        <div class="input-group">
+                            <label for="support_name">User</label>
+                            <input type="text" id="support_name" name="support_name" required>
+                        </div>
+            
+                        <div class="input-group">
+                            <label for="support_email">Email</label>
+                            <input type="email" id="support_email" name="support_email" required>
+                        </div>
+            
+                        <div class="input-group">
+                            <label for="support_message">Your Message</label>
+                            <textarea id="support_message" name="support_message" rows="5" required></textarea>
+                        </div>
+            
+                        <button type="submit">Submit Request</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="form-container-wrapper">
+                <div class="form-container" id="faq_preview">
+                    <h2>FAQ Preview</h2>
+                    <p>Here are some frequently asked questions:</p>
+            
+                    <div class="faq-item">
+                        <button class="faq-question">How do I track my symptoms?</button>
+                        <div class="faq-answer">
+                            <p>You can track your symptoms by going to the Dashboard and selecting one of the pain symptoms you suffer from.</p>
+                        </div>
+                    </div>
+            
+                    <div class="faq-item">
+                        <button class="faq-question">Can I delete my tracking pain if made mistakes?</button>
+                        <div class="faq-answer">
+                            <p>Yes, go to sidebar where you tracke your pain symptom in the Dashboard page and click 'Delete' next to the record table.</p>
+                        </div>
+                    </div>
+            
+                    <div class="faq-item">
+                        <button class="faq-question">How do reminders work?</button>
+                        <div class="faq-answer">
+                            <p>Reminders are sent based on your preferred time settings from your profile page.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+    <script>
+        document.querySelectorAll(".faq-question").forEach(button => {
+        button.addEventListener("click", () => {
+        const answer = button.nextElementSibling;
+        answer.style.display = (answer.style.display === "block") ? "none" : "block";
+           });
+        });
+    </script>
+            
+    <script>
+        function showForm(formId) {
+            const forms = document.querySelectorAll('.form-container');
+            forms.forEach(form => form.style.display = 'none');
+            const formToShow = document.getElementById(formId);
+            formToShow.style.display = 'block';
+        }
+
+        showForm('customer_support');
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const darkModeToggle = document.getElementById("darkModeToggle");
+            const body = document.body;
+    
+            if (localStorage.getItem("darkMode") === "enabled") {
+                body.classList.add("dark-mode");
+                if (darkModeToggle) darkModeToggle.checked = true;
+            }
+    
+            if (darkModeToggle) {
+                darkModeToggle.addEventListener("change", function () {
+                    if (this.checked) {
+                        body.classList.add("dark-mode");
+                        localStorage.setItem("darkMode", "enabled");
+                    } else {
+                        body.classList.remove("dark-mode");
+                        localStorage.setItem("darkMode", "disabled");
+                    }
+                });
+            }
+        });
+    </script>   
+    {% if success %}
+    <script>
+        alert("Successfully sent thank you!");
+    </script>
+{% endif %}
+
+</div>
+</div> 
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History of Pain Symptoms</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        body.dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+   
+        .dark-mode header, 
+        .dark-mode nav {
+            background-color: #1e1e1e;
+        }
+        
+        .dark-mode a {
+            color: #ffffff;
+        }
+        
+        .dark-mode .form-container {
+            background: #222;
+            color: white;
+        }
+
+        header {
+            background: black;
+            color: white;
+            padding: 15px 0;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background: #0077b6;
+            padding: 10px 0;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 18px;
+        }
+
+        nav a:hover {
+            background: #1abc9c;
+            border-radius: 5px;
+        }
+        .main-container {
+            display: flex;
+          }
+      
+          .sidebar {
+            width: 250px;
+            background-color: black;
+            color: white;
+            padding-top: 20px;
+            height: 100vh;
+            position: fixed;
+            top: 118px;
+            left: 0;
+            overflow-y: auto;
+          }
+      
+          .sidebar h2 {
+            text-align: center;
+            padding-bottom: 10px;
+            font-size: 22px;
+            border-bottom: 1px solid white;
+          }
+      
+          .sidebar a {
+            display: block;
+            color: white;
+            padding: 15px 20px;
+            text-decoration: none;
+            cursor: pointer;
+          }
+      
+          .sidebar a:hover, .sidebar a.active {
+            background-color: #575757;
+          }
+      
+          .content {
+            margin-left: 270px;
+            padding: 30px;
+            width: calc(100% - 270px);
+          }
+      
+          .pain-detail {
+            display: none;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+          }
+      
+          .pain-detail.active {
+            display: block;
+          }
+      
+          @media (max-width: 768px) {
+            .main-container {
+              flex-direction: column;
+            }
+            .sidebar {
+              position: relative;
+              width: 100%;
+              height: auto;
+            }
+            .content {
+              margin-left: 0;
+              width: 100%;
+            }
+          }
+
+    </style>
+</head>
+<body>
+    <header>History of Pain Tracking </header>
+  
+    <nav>
+      <a href="{% url 'HomePage' %}">Home</a>
+    </nav>
+  
+    <div class="main-container">
+      <div class="sidebar">
+        <h2>Pain History</h2>
+        <a onclick="showPainDetail('chest')" id="chest-link">Chest Pain</a>
+        <a onclick="showPainDetail('back')" id="back-link">Back Pain</a>
+        <a onclick="showPainDetail('joint')" id="joint-link">Joint Pain</a>
+        <a onclick="showPainDetail('headache')" id="headache-link">Headache</a>
+        <a onclick="showPainDetail('abdominal')" id="abdominal-link">Abdominal Pain</a>
+      </div>
+  
+      <div class="content">
+        <div id="chest" class="pain-detail">
+          <h2>Chest Pain</h2>
+          <p><strong>What to note:</strong> "The users selects chest pain in the dashboard, the user tracks the pain severity the pain level, then the users notes down the duration meaning how long the pain last, then the location of the chest pain, the type of pain depending on the situation and the potential trigger and below is an example of tracking.</p>
+          <button class="view-button" onclick="openModal('modalChest')">View</button>
+        </div>
+      
+        <div id="back" class="pain-detail">
+          <h2>Back Pain</h2>
+          <p><strong>What to note:</strong> "The users selects back pain in the dashboard, the user tracks the pain severity the pain level, then the users notes down the duration meaning how long the pain last, then the location of the back pain, the type of pain depending on the situation and the potential trigger and below is an example of tracking. </p>
+          <button class="view-button" onclick="openModal('modalBack')">View</button>
+        </div>
+      
+        <div id="joint" class="pain-detail">
+          <h2>Joint Pain</h2>
+          <p><strong>What to note:</strong> "The users selects joint pain in the dashboard, the user tracks the pain severity the pain level, then the users notes down the duration meaning how long the pain last, then the location of the joint pain, the type of pain depending on the situation and the potential trigger and below is an example of tracking. </p>
+          <button class="view-button" onclick="openModal('modalJoint')">View</button>
+        </div>
+      
+        <div id="headache" class="pain-detail">
+          <h2>Headache</h2>
+          <p><strong>What to note:</strong> "The users selects headache pain in the dashboard, the user tracks the pain severity the pain level, then the users notes down the duration meaning how long the pain last, then the location of the headache pain, the type of pain depending on the situation and the potential trigger and below is an example of tracking. </p>
+          <button class="view-button" onclick="openModal('modalHeadache')">View</button>
+        </div>
+      
+        <div id="abdominal" class="pain-detail">
+          <h2>Abdominal Pain</h2>
+          <p><strong>What to note:</strong> "The users selects abdominal pain in the dashboard, the user tracks the pain severity the pain level, then the users notes down the duration meaning how long the pain last, then the location of the abdominal pain, the type of pain depending on the situation and the potential trigger and below is an example of tracking. </p>
+          <button class="view-button" onclick="openModal('modalAbdominal')">View</button>
+        </div>
+
+        <div id="defaultMessage" style="font-size: 18px; color: #555;">
+          <p>Select a pain symptom from the sidebar to view its tracking history and description.</p>
+        </div>
+      </div>
+    </div>
+  
+    <script>
+      function showPainDetail(id) {
+        const allDetails = document.querySelectorAll(".pain-detail");
+        const allLinks = document.querySelectorAll(".sidebar a");
+  
+        allDetails.forEach(div => div.classList.remove("active"));
+        allLinks.forEach(link => link.classList.remove("active"));
+  
+        document.getElementById(id).classList.add("active");
+        document.getElementById(id + "-link").classList.add("active");
+  
+        document.getElementById("defaultMessage").style.display = "none";
+      }
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const darkModeToggle = document.getElementById("darkModeToggle");
+            const body = document.body;
+    
+            if (localStorage.getItem("darkMode") === "enabled") {
+                body.classList.add("dark-mode");
+                if (darkModeToggle) darkModeToggle.checked = true;
+            }
+ 
+            if (darkModeToggle) {
+                darkModeToggle.addEventListener("change", function () {
+                    if (this.checked) {
+                        body.classList.add("dark-mode");
+                        localStorage.setItem("darkMode", "enabled");
+                    } else {
+                        body.classList.remove("dark-mode");
+                        localStorage.setItem("darkMode", "disabled");
+                    }
+                });
+            }
+        });
+    </script>
+
+    <div id="modalBox" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:999;">
+        <div style="background:white; padding:30px; border-radius:10px; width:80%; max-width:500px; text-align:center; position:relative;">
+          <span onclick="closeModal()" style="position:absolute; top:10px; right:20px; font-size:22px; cursor:pointer;">&times;</span>
+          <h2 id="modalTitle">Symptom Detail</h2>
+          <p id="modalData">Loading data...</p>
+        </div>
+    </div>
+    <script>
+        const dataMap = {
+            modalChest: "Chest Pain – Pain-Severity: 7–Duration: 15 minutes–Date: 02/01/2025 – Location: Center Chest",
+            modalBack: "Back Pain – 05/01/2025 – Pain-Severity: 6 – Location: Lower Back",
+            modalJoint: "Joint Pain – 10/01/2025 – Pain-Severity: 5 – Location: Left Knee",
+            modalHeadache: "Headache – 15/01/2025 – Pain-Severity: 8 – Location: Forehead",
+            modalAbdominal: "Abdominal Pain – 20/01/2025 – Pain-Severity: 6 – Location: Lower Abdomen"
+        };
+    
+        function openModal(type) {
+            document.getElementById("modalBox").style.display = "flex";
+            document.getElementById("modalTitle").innerText = "Symptom Detail";
+            document.getElementById("modalData").innerText = dataMap[type] || "No data available.";
+        }
+    
+        function closeModal() {
+            document.getElementById("modalBox").style.display = "none";
+        }
+    </script>
+          
+</body>
+</html>

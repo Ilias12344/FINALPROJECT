@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guidance</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+        }
+        body.dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+        
+        .dark-mode header, 
+        .dark-mode nav, 
+        .dark-mode .sidebar {
+            background-color: #1e1e1e;
+        }
+        
+        .dark-mode a {
+            color: #ffffff;
+        }
+        
+        .dark-mode .form-container {
+            background: #222;
+            color: white;
+        }
+        
+        .dark-mode input, 
+        .dark-mode select, 
+        .dark-mode button {
+            background: #333;
+            color: white;
+            border: 1px solid #555;
+        }
+
+        .header-nav {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        header {
+            background: black;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background:#0077b6;
+            padding: 10px 0;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 18px;
+        }
+
+        nav a:hover {
+            background: #1abc9c;
+            border-radius: 5px;
+        }
+
+        .container {
+            display: flex;
+            flex: 1;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: black;
+            padding: 15px;
+            height: 100vh;
+        }
+        .sidebar span {
+            padding: 15px;
+            text-decoration: none;
+            color: white;
+            display: block;
+        }
+
+        .sidebar span:hover {
+            background-color: #575757;
+        }
+
+         h2 {
+            color: white;
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .search-bar {
+            width: 85%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .steps {
+            display: none;
+        }
+
+        .steps.active {
+            display: block;
+        }
+
+        .symptom-link {
+            display: block;
+            padding: 8px;
+            cursor: pointer;
+            color: blue;
+        }
+
+        .symptom-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-nav">
+        <header>Guidance on tracking</header>
+        <nav>
+            <a href="{% url 'HomePage' %}">Home</a>
+        </nav>
+    </div>
+
+    <div class="container">
+        <div class="sidebar">
+            <h2>Symptoms</h2>
+            <input type="text" id="search" class="search-bar" placeholder="Search symptoms...">
+            <div id="symptoms-list">
+                <span class="symptom-link" data-target="how-to-track">How to track each of the pain symptom?</span>
+                <span class="symptom-link" data-target="how-to-view">How to view pain records?</span>
+                <span class="symptom-link" data-target="how-to-delete">How to delete pain entries?</span>
+            </div>
+        </div>
+
+        <div class="content">
+            <h1>Pain Symptoms Guide</h1>
+            <p>This is page where users will be guided in knowing the background of the tracking. Below are detailed explains the information on the dashboard, to view ficitous data from the history pain symptom page, and this will help you understand better and be familiar with pain tracking web application.</p>
+          
+            <div id="how-to-track" class="steps">
+                <h2>Guidance on tracking the pain symptoms</h2>
+                <p><strong>Pain Severity (0-10):</strong> 0 - No Pain and 10 - Pain. It is a way to describe the pain level and journey of the start, the users can see the progress between each pain tracking.</p>
+                <p><strong>Duration (minutes):</strong>The duration is a way to measure how long the pain lasts during each episode, in minutes. This helps track the persistence of the pain. A high severity score with a short duration may indicate a different type of issue than a low severity score with a long duration as each of the users have different situation. It helps in understanding the impact of the pain over time. </p>
+                <p><strong>Location of Pain:</strong> It is to specify the area of the body where the pain is felt. Users can choose from a list of common locations as there will be more specific area, depending on the condition being tracked (e.g., chest, back, joints).</p>
+                <p><strong>Type of Pain:</strong>This describes the quality of the pain (e.g., sharp, dull, throbbing, pressure). This helps capture the characteristics of the pain experience and provides further details about the pain's nature. Understanding the type of pain can help differentiate between various conditions. For instance, a sharp pain suggest sudden pain, while a dull pain would be constant. Knowing the type of pain can lead to better treatment or management plans.</p>
+                <p><strong>Potential Trigger:</strong>To identify what might have caused the pain. The user can specify triggers like stress, physical activity and certain foods. Identifying potential triggers helps in managing the pain.</p>
+                <ul>
+                </div>
+                <div id="how-to-view" class="steps">
+                    <h2>How to view pain records?</h2>
+                    <p>To view your previous pain records:</p>
+                    <ul>
+                        <li>Go to the Dashboard in order to track and users can see the History section an example of it from the sidebar menu of the HomePage.</li>
+                        <li>Select the specific pain type (e.g., Headache, Back Pain) to view related entries.</li>
+                        <li>users can see a list of information on pain symptoms with details like date, severity, and duration.</li>
+                        <li>Takes the users back to the Dashboard depending which pain symptom the users tracked, users can click on it then can view the records.</li>
+                    </ul>
+                </div>
+                
+                <div id="how-to-delete" class="steps">
+                    <h2>How to delete pain entries?</h2>
+                    <p>To remove a pain log entry:</p>
+                    <ul>
+                        <li>Go to the Dashboard page.</li>
+                        <li>Users can delete the log entries, it can be found in the records which in it are listed by pain type and date.</li>
+                        <li>Click the <strong>Delete</strong> button next to that entry to remove it from the records.</li>
+                        <li>The users will be asked to confirm before the entry is deleted.</li>
+                    </ul>
+                </div>
+        </div>                
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let symptoms = document.querySelectorAll(".symptom-link");
+            let sections = document.querySelectorAll(".steps");
+
+            symptoms.forEach(symptom => {
+                symptom.addEventListener("click", function () {
+                    let target = this.getAttribute("data-target");
+                    sections.forEach(sec => sec.classList.remove("active"));
+                    document.getElementById(target).classList.add("active");
+                });
+            });
+
+            document.getElementById("search").addEventListener("input", function () {
+                let filter = this.value.toLowerCase();
+                symptoms.forEach(symptom => {
+                    if (symptom.innerText.toLowerCase().includes(filter)) {
+                        symptom.style.display = "block";
+                    } else {
+                        symptom.style.display = "none";
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const darkModeToggle = document.getElementById("darkModeToggle");
+            const body = document.body;
+    
+            if (localStorage.getItem("darkMode") === "enabled") {
+                body.classList.add("dark-mode");
+                if (darkModeToggle) darkModeToggle.checked = true;
+            }
+    
+            if (darkModeToggle) {
+                darkModeToggle.addEventListener("change", function () {
+                    if (this.checked) {
+                        body.classList.add("dark-mode");
+                        localStorage.setItem("darkMode", "enabled");
+                    } else {
+                        body.classList.remove("dark-mode");
+                        localStorage.setItem("darkMode", "disabled");
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
