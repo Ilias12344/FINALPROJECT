@@ -64,8 +64,6 @@
     .gdpr input {
       margin-right: 8px;
     }
-
-    /* MODAL STYLES */
     .modal {
       display: none;
       position: fixed;
@@ -147,15 +145,15 @@
   <div id="privacy-policy-modal" class="modal">
     <div class="modal-content">
       <h2>Privacy Policy</h2>
-      <p>Welcome to Pain Tracking Web Application. This Privacy Policy is to collect, use, and safeguard the data.</p>
+      <p>Welcome to Pain Tracking Web Application. This Privacy Policy is to collect, use, and safeguard the data.</p> 
       
       <h3>1. Information Collected</h3>
       <p>The information that is collected will be such as username and email when signing up.</p>
 
-      <h3>2. Your Rights</h3>
-      <p>You can access, update, or request deletion of your data.</p>
+      <h3>2. Rights</h3>
+      <p>Ability to access, update, or request deletion of your data.</p>
 
-      <h3>3. Contact Us</h3>
+      <h3>3. Contact </h3>
       <p>Email: 210168442@aston.ac.uk</p>
 
       <div class="modal-buttons">
@@ -172,7 +170,7 @@
     const cancelBtn = document.getElementById("cancel-policy");
     const gdprCheckbox = document.getElementById("gdpr-consent");
 
-    // Open modal when clicking "Privacy Policy"
+    // Open when clicking "Privacy Policy" in the GDPR
     privacyPolicyLink.addEventListener("click", function(event) {
       event.preventDefault();
       modal.style.display = "flex";
@@ -196,7 +194,7 @@
       }
     });
 
-    // Form Submission
+    // Once the signup is done and agreed with the privacy policy the username and password will be successful 
     document.getElementById("signup-form").addEventListener("submit", async function(event) {
       event.preventDefault();
 
