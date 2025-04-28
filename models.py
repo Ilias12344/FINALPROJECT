@@ -1,5 +1,6 @@
 from django.db import models
 
+#For the PainRecord in the dashboard
 class PainRecord(models.Model):
     pain_type = models.CharField(max_length=100)
     severity = models.IntegerField()
